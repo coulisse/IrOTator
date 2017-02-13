@@ -1,0 +1,3 @@
+[] connettere la bussola
+[] mandare le informazioni di posizione bussola in modalità brodcast
+[] mandare le informazioni da esp8266 attivamente, ogni volta che la posizione della bussola cambia
