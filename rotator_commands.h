@@ -1,0 +1,7 @@
+#define CMD_GET_COMPASS   "getCompass"
+#define CMD_SET_ROTATOR   "setRotator"
+#define CMD_STOP_ROTATOR  "stopRotator"
+#define CMD_LEFT_ROTATOR  "leftRotator"
+#define CMD_RIGHT_ROTATOR "rightRotator"
+#define CMD_STANDBY       "standBy"
+#define CMD_RESET         "reset"

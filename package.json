@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "canvas-gauges": "git@github.com:Mikhus/canvas-gauges.git"
+  }
+} 
