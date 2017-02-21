@@ -1,4 +1,4 @@
-
+#define DEBUG 1
 
 /* TODO:
  *  - set output power
@@ -9,10 +9,13 @@
 #include <Adafruit_HMC5883_U.h>
 #include <WebSocketsServer.h>
 #include <ArduinoJson.h>
+#include "rotator_commands.h"
 
 
-Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(12345);
+Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified();
 sensors_event_t event;
+sensor_t sensor;
+
 
 WebSocketsServer webSocket = WebSocketsServer(81);
 const char* ssid     ="hyperline-11635";
@@ -21,6 +24,8 @@ const char* password = "auj6xai6iN";
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) {
 StaticJsonBuffer<200> jsonBuffer;
+
+
 
       switch(type) {
         
@@ -36,7 +41,9 @@ StaticJsonBuffer<200> jsonBuffer;
           String text = String((char *) &payload[0]);
           JsonObject& root = jsonBuffer.parseObject(text);
           if (!root.success()) {
-              Serial.println(F("parseObject() failed"));
+              #if  (DEBUG==Y)
+                 Serial.println(F("parseObject() failed"));
+              #endif
               return;
           }
   
@@ -61,20 +68,22 @@ StaticJsonBuffer<200> jsonBuffer;
 
 void setup() {
    
-   Serial.begin(115200);    
+   
+   Serial.begin(9600);    
    
    WiFi.begin(ssid, password);
 
     while(WiFi.status() != WL_CONNECTED) {
         delay(500);
     }
+    Serial.println();
     Serial.print(F("Local IP"));
     Serial.println(WiFi.localIP());
     webSocket.begin();
     webSocket.onEvent(webSocketEvent);
 
 
-      Serial.println("HMC5883 Magnetometer Test"); Serial.println("");
+    Serial.println("HMC5883 Magnetometer"); Serial.println("");
   
   /* Initialise the sensor */
   if(!mag.begin())  {
@@ -83,13 +92,19 @@ void setup() {
     while(1);
   }
 
+
     /* Display some basic information on this sensor */
-  displaySensorDetails();
+  #if  (DEBUG == 1)
+     displaySensorDetails();
+  #endif
+  
 }
 
 void loop() {
+  
   webSocket.loop();
-  doCommand("getCompass");
+  doCommand(CMD_GET_COMPASS);
+  
   delay(500);  //TODO: eliminare
 }
 
@@ -99,7 +114,7 @@ void loop() {
 void doCommand(const char* command){
 //{"c":"getCompass","v":"valore","r":"return code"}
 StaticJsonBuffer<200> jsonBuffer;
-
+  
   char buffer[256];
   JsonObject& root = jsonBuffer.createObject();
 
@@ -107,31 +122,31 @@ StaticJsonBuffer<200> jsonBuffer;
   root["v"] = "command unknown";
   root["r"] = 99;
 
-  if (strcmp(command,"getCompass")==0) {
+  if (strcmp(command,CMD_GET_COMPASS)==0) {
     root["v"] = getCompass();
     root["r"] = 0;
   } else {
-    if (strcmp(command,"setCompass")==0){
-      root["v"] = setCompass(2);
+    if (strcmp(command,CMD_SET_ROTATOR)==0){
+      root["v"] = setRotator(2);
       root["r"] = 0;
     } else {
-      if (strcmp(command,"stopRotator")==0){
+      if (strcmp(command,CMD_STOP_ROTATOR)==0){
         root["v"] = stopRotator();
         root["r"] = 0;
       } else {
-        if (strcmp(command,"leftRotator")==0){
+        if (strcmp(command,CMD_LEFT_ROTATOR)==0){
           root["v"] = leftRotator();
           root["r"] = 0;
         } else {
-          if (strcmp(command,"rightRotator")==0){
+          if (strcmp(command,CMD_RIGHT_ROTATOR)==0){
             root["v"] = rightRotator();
             root["r"] = 0;
           } else {
-            if (strcmp(command,"standBy")==0){
+            if (strcmp(command,CMD_STANDBY)==0){
               root["v"] = standBy();
               root["r"] = 0;
             } else {
-              if (strcmp(command,"reset")==0){
+              if (strcmp(command,CMD_RESET)==0){
                 root["v"] = standBy();
                 root["r"] = 0;
               }
@@ -144,21 +159,24 @@ StaticJsonBuffer<200> jsonBuffer;
 }
 
 
-int getCompass(){
-    
+float getCompass(){
+
   /* Get a new sensor event */ 
-   
+  
   mag.getEvent(&event);
- 
+   
   // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
   // Calculate heading when the magnetometer is level, then correct for signs of axis.
-  float heading = atan2(event.magnetic.y, event.magnetic.x);
+   float y = event.magnetic.y;
+   //float x = (event.magnetic.x*1.5)+10;
+   float x = event.magnetic.x;
+//  float heading = atan2(event.magnetic.y, event.magnetic.x);
+  float heading = atan2(y, x);
   
   // Once you have your heading, you must then add your 'Declination Angle', which is the 'Error' of the magnetic field in your location.
   // Find yours here: http://www.magnetic-declination.com/
   // Mine is: -13* 2' W, which is ~13 Degrees, or (which we need) 0.22 radians
-  // If you cannot find your Declination, comment out these two lines, your compass will be slightly off.
-  float declinationAngle = 0.22;
+  float declinationAngle = 0.03595378;
   heading += declinationAngle;
   
   // Correct for when signs are reversed.
@@ -171,13 +189,19 @@ int getCompass(){
    
   // Convert radians to degrees for readability.
   float headingDegrees = heading * 180/M_PI; 
+
+      /* Display some basic information on this sensor */
+  #if  (DEBUG == 1)
+    Serial.print("- Heading (rad-degrees): "); Serial.print (heading); Serial.print ("-"); Serial.println(headingDegrees);
+    Serial.print("- y: "); Serial.print (y); Serial.print ("- x"); Serial.println(x);
+  #endif
   
-  Serial.print("Heading (degrees): "); Serial.println(headingDegrees);
+  
   
   return headingDegrees;
 }
 
-int setCompass(int degree){
+int setRotator(int degree){
   return 2;
 }
 
@@ -203,7 +227,7 @@ int reset(){
 
 
 void displaySensorDetails(void) {
-  sensor_t sensor;
+  //sensor_t sensor;
   mag.getSensor(&sensor);
   Serial.println("------------------------------------");
   Serial.print  ("Sensor:       "); Serial.println(sensor.name);
