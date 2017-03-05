@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" href="img/favicon.ico"/>
+        <title>IU1BOW: rotator IOT</title>
+        <!-- css -->
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <!-- https://canvas-gauges.com -->
+        <script src="js/gauge.min.js"></script>
+        <script src="js/rotatorControl.js"></script>
+    </head>
+    <body>
+        <input id="connectionString" value="ws://192.168.1.73:81/" onkeypress="if(this.value) {if (window.event.keyCode == 13) {
+          init(this.value);
+          console.log(this.value);
+          }}"/>
+        <div id="output"></div>
+        <canvas class=controlCompas id="bussola" data-type="radial-gauge"
+                data-width="500"
+                data-height="500"
+                data-min-value="0"
+                data-max-value="360"
+                data-major-ticks="N,NE,E,SE,S,SW,W,NW,N"
+                data-minor-ticks="22"
+                data-ticks-angle="360"
+                data-start-angle="180"
+                data-stroke-ticks="false"
+                    data-highlights='[
+                    {"from": 0, "to": 1, "color": "rgba(200, 50, 50, .75)"}
+                ]'
+                data-numbers-margin="1"
+                data-color-plate="#33a"
+                data-color-major-ticks="#f5f5f5"
+                data-color-minor-ticks="#ddd"
+                data-color-numbers="#ccc"
+                data-color-needle="rgba(240, 128, 128, 1)"
+                data-color-needle-end="rgba(255, 160, 122, .9)"
+                data-value-box="false"
+                data-animated-value="false"
+                data-value-text-shadow="false"
+                data-color-circle-inner="#fff"
+                data-color-needle-circle-outer="#ccc"
+                data-needle-circle-size="15"
+                data-needle-circle-outer="true"
+                data-animation-rule="linear"
+                data-needle-type="line"
+                data-needle-start="75"
+                data-needle-end="99"
+                data-needle-width="3"
+                data-borders="true"
+
+                data-color-border-outer="#ccc"
+                data-color-border-outer-end="#ccc"
+                data-color-needle-shadow-down="#222"
+                data-border-shadow-width="0"
+                data-animation-target="needle"
+                data-units="g"
+                data-title="DIRECTION"
+                data-font-title-size="19"
+                data-color-title="#f5f5f5"
+                data-animation-duration="1500"
+                data-value="0"
+                data-animate-on-init="true"
+                data-use-min-path="true"
+        >
+         </canvas>
+         <script>
+           var canvas = document.getElementById('bussola');
+           canvas.addEventListener('click',function setHeading(evt) {
+             var mousePos = getMousePos(canvas, evt);
+             var x=mousePos.x - canvas.width/2;
+             var y=mousePos.y - canvas.height/2;
+             var heading = Math.atan2(x,-y);
+
+             if (typeof websocket === 'undefined' || websocket === null) {
+             // variable is undefined or null
+             } else if (websocket.readyState == 1) {
+            // Correct for when signs are reversed.
+               if(heading < 0)
+                 heading += 2* Math.PI;
+
+               // Check for wrap due to addition of declination.
+               if(heading > 2* Math.PI)
+                   heading -= 2* Math.PI;
+                   headingDegrees = heading * 180/Math.PI;
+                   document.gauges.forEach(function(gauge) {
+                   gauge.options.highlights[0].from=headingDegrees;
+                   gauge.options.highlights[0].to=headingDegrees+1;
+                   gauge.update();
+                   setRotator(headingDegrees);
+               });
+             }
+           });
+        </script>
+        <div class=control>
+          <input id="btnConnect" type="button" class="button" value="Connect" onclick="btnConnectFunc()">
+          <input id="btnStop" type="button" class="button buttonDisabled" value="Stop" onclick="btnStopFunc()">
+          <input id="btnReset" type="button" class="button buttonDisabled" value="Reset" onclick="btnResetFunc()">
+        </div>
+    </body>
+</html>
