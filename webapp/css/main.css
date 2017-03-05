@@ -1,7 +1,7 @@
 <style>
-  body {background-color: #f7f9f9;}
-  h1   {color: blue;}
-  p    {color: red;}
+
+  p{}
+
   .button {
     background-color: #4CAF50;
     border: none;
@@ -14,7 +14,9 @@
     margin: 4px 2px;
     width: 135px;
     cursor: pointer;
+
   }
+
   .buttonWarn {background-color: #f44336;} /* Red */
   .buttonDisabled {background-color: #e7e7e7; color: black;} /* Gray */
   .buttonPressed {background-color: #555555;} /* Black */
@@ -26,18 +28,30 @@
      padding: 10px;
      max-width: 140px;
      min-height: 480px;
-     border: 1px solid white;
-     background: #eff4f4;
+     border: hidden gray;
+
+
   }
 
   .controlCompas {
      float: left;
      margin: 0px;
      padding: 0px;
-     border: 1px solid white;
-     background: #eff4f4;
+     border: 1px hidden gray;
 
   }
 
+  #connectionString {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+
+}
+
 </style>
- 

@@ -9,7 +9,13 @@
         <!-- https://canvas-gauges.com -->
         <script src="js/gauge.min.js"></script>
         <script src="js/rotatorControl.js"></script>
+        <style>
+          body {
+              background-image: url("img/background.jpg");
+          }
+        </style>
     </head>
+
     <body>
         <input id="connectionString" value="ws://192.168.1.73:81/" onkeypress="if(this.value) {if (window.event.keyCode == 13) {
           init(this.value);
