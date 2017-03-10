@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="colorful">
     <head>
         <meta charset="UTF-8">
         <link rel="icon" href="img/favicon.ico"/>
@@ -9,20 +9,10 @@
         <!-- https://canvas-gauges.com -->
         <script src="js/gauge.min.js"></script>
         <script src="js/rotatorControl.js"></script>
-        <style>
-          body {
-              background-image: url("img/background.jpg");
-          }
-        </style>
     </head>
 
     <body>
-        <input id="connectionString" value="ws://192.168.1.73:81/" onkeypress="if(this.value) {if (window.event.keyCode == 13) {
-          init(this.value);
-          console.log(this.value);
-          }}"/>
-        <div id="output"></div>
-        <canvas class=controlCompas id="bussola" data-type="radial-gauge"
+        <canvas class=controlCompass id="bussola" data-type="radial-gauge"
                 data-width="500"
                 data-height="500"
                 data-min-value="0"
@@ -36,7 +26,7 @@
                     {"from": 0, "to": 1, "color": "rgba(200, 50, 50, .75)"}
                 ]'
                 data-numbers-margin="1"
-                data-color-plate="#33a"
+                data-color-plate="#00802b"
                 data-color-major-ticks="#f5f5f5"
                 data-color-minor-ticks="#ddd"
                 data-color-numbers="#ccc"
@@ -55,11 +45,14 @@
                 data-needle-end="99"
                 data-needle-width="3"
                 data-borders="true"
-
-                data-color-border-outer="#ccc"
+                data-border-outer-width="5"
+                data-border-middle-width="2"
+                data-border-inner-width="7"
+                data-color-border-outer="#ccd"
                 data-color-border-outer-end="#ccc"
                 data-color-needle-shadow-down="#222"
-                data-border-shadow-width="0"
+                data-border-shadow-width="12"
+                data-color-border-shadow="#222"
                 data-animation-target="needle"
                 data-units="g"
                 data-title="DIRECTION"
@@ -70,7 +63,8 @@
                 data-animate-on-init="true"
                 data-use-min-path="true"
         >
-         </canvas>
+        </canvas>
+       
          <script>
            var canvas = document.getElementById('bussola');
            canvas.addEventListener('click',function setHeading(evt) {
@@ -99,10 +93,35 @@
              }
            });
         </script>
+
+        
         <div class=control>
-          <input id="btnConnect" type="button" class="button" value="Connect" onclick="btnConnectFunc()">
-          <input id="btnStop" type="button" class="button buttonDisabled" value="Stop" onclick="btnStopFunc()">
-          <input id="btnReset" type="button" class="button buttonDisabled" value="Reset" onclick="btnResetFunc()">
+        	<input id="connectionString" value="ws://192.168.1.73:81/" onkeypress="if(this.value) {if (window.event.keyCode == 13) {
+          init(this.value);
+          console.log(this.value);
+          }}"/>
+				  <div class="left"> 
+          <input id="btnConnect" type="button" class="button" value="Connect" onclick="btnConnectFunc()">          
+        	</div>
+        	<div class="right">
+        		<input id="btnStop" type="button" class="button buttonDisabled" value="Stop" onclick="btnStopFunc()">
+        	</div>
+        	<div class="left">
+        		<input id="btnReset" type="button" class="button buttonDisabled" value="Reset" onclick="btnResetFunc()">
+        	</div>
+        	<div class="right">
+          <input id="btnMap" type="button" class="button" value="Map" onClick="redirect('#openModal')">    
+					</div>
+          <div class="box" id="output"></div>
         </div>
+        
+        <!-- map -->
+        <div id="openModal" class="modalDialog">
+          <div id="map">
+		        <a href="#close" title="Close" class="close">X</a>
+			      <img src="img/map.png">
+	        </div>
+        </div>
+
     </body>
 </html>

@@ -7,13 +7,13 @@ const LBL_RESETTING = "Resetting";
 const LBL_STOP = "Stop";
 const LBL_STOPPING = "Stopping";
 
-
 var headingDegrees, sv_heading=0;
+
 function init(url) {
   websocket = new WebSocket(url);
 
   websocket.onopen = function() {
-      document.getElementById("output").innerHTML += "<p>> CONNECTED</p>";
+      outputMessage("CONNECTED",false);
       var btn = document.getElementById("btnConnect");
       btn.value = LBL_DISCONNECT;
       btn.className = "button";
@@ -44,12 +44,22 @@ function init(url) {
   };
 
   websocket.onerror = function(evt) {
-      document.getElementById("output").innerHTML += "<p style='color: red;'>> ERROR: " + evt.data + "</p>";
+      outputMessage("ERROR: " + evt.data,true);
       var btn = document.getElementById("btnConnect");
       btn.value = LBL_CONNECT;
       btn.className = "button";
     };
   }
+
+  function outputMessage (msg,error) {
+  	var elem = document.getElementById("output");
+  	if (error=true) {
+  	  	elem.innerHTML += "<P class  = 'error' >"+msg+"</P>";
+  	} else {
+  			elem.innerHTML += "<P>"+msg+"</P>";
+  	}
+  }
+
 
   function getCompass() {
       message='{"c":"getCompass","v":"","r":""}'
@@ -70,7 +80,7 @@ function init(url) {
 
 
   function sendMessage(message) {
-    document.getElementById("output").innerHTML = "<p>> SENT: " + message + "</p>";
+    outputMessage("SENT: " + message,false);
     websocket.send(message);
   }
 
@@ -138,7 +148,6 @@ function init(url) {
 
       btnReset.value = LBL_RESET;
       btnReset.className = "button buttonDisabled";
-
       btnConnect.className = "button";
     }
   }
@@ -161,3 +170,9 @@ function btnStopFunc() {
       y: evt.clientY - rect.top
     };
   }
+
+//open window on the same window
+function redirect(url){
+   var url = "#openModal";
+    window.open(url, '_top');
+}
