@@ -2,7 +2,7 @@
   	/* http://www.webcore-it.com/colorful-background/#   */
   height: 100%;
 	font-family: Arial;
-	
+
 	background:
 		-webkit-linear-gradient(45deg, hsla(247, 100%, 14%, 1) 0%, hsla(247, 100%, 14%, 0) 70%),
 		-webkit-linear-gradient(315deg, hsla(193, 95%, 39%, 1) 10%, hsla(193, 95%, 39%, 0) 80%),
@@ -14,16 +14,37 @@
 		linear-gradient(225deg, hsla(228, 90%, 20%, 1) 10%, hsla(228, 90%, 20%, 0) 80%),
 		linear-gradient(315deg, hsla(272, 95%, 4%, 1) 100%, hsla(272, 95%, 4%, 0) 70%);
 	}
+
+
+  p {
+  	margin-left:20px;
+  	margin-top: 0px;
+  	margin-bottom: 0px;
+  	font-family:  Courier, monospace;
+  }
+
+  p.error {
+  	color: orange;
+  }
+
+  h1 {
+    background: #ccc;
+    width: 100%;
+    max-width: 24em;
+    margin: 0 auto;
+    padding: 0.25em 0.625em;
+  }
+  
   	.control {
      float: left;
      padding: 15px 50px;
     /* max-width: 600px; */
      width: 500px;
-     border: hidden gray; 
+     border: hidden gray;
      margin: auto;
      display: block;
   }
-  
+
   .controlCompass {
      float: left;
      margin: 0px;
@@ -46,7 +67,7 @@
     border-radius: 4px;
     width:100%;
     height: 8%;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); 
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   }
 
   .buttonWarn {background-color: #f44336;} /* Red */
@@ -62,16 +83,18 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);  
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   }
-  
+
 div.box {
     border-radius: 4px;
     width:100%; height:250px;
-    overflow:auto;
-    
-    
-    
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    margin-bottom:0px;
+    margin-top:180px;
+
 	background:
 		-webkit-linear-gradient(45deg, hsla(195, 54%, 27%, 1) 0%, hsla(195, 54%, 27%, 0) 70%),
 		-webkit-linear-gradient(315deg, hsla(193, 55%, 44%, 1) 10%, hsla(193, 55%, 44%, 0) 80%),
@@ -82,35 +105,16 @@ div.box {
 		linear-gradient(135deg, hsla(193, 55%, 44%, 1) 10%, hsla(193, 55%, 44%, 0) 80%),
 		linear-gradient(225deg, hsla(195, 54%, 41%, 1) 10%, hsla(195, 54%, 41%, 0) 80%),
 		linear-gradient(315deg, hsla(193, 53%, 24%, 1) 100%, hsla(193, 53%, 24%, 0) 70%);
-		
-		
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    
-    
-    margin-bottom:0px; 
-    margin-top:180px; 
-    
-}
- 
 
-p {
-	margin-left:20px;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	font-family:  Courier, monospace;
 }
 
-p.error {
-	color: orange;
-}
+div.box::-webkit-scrollbar {width:7px;height:7px;}
+div.box::-webkit-scrollbar-button {background-color:rgba(156,155,155,1);border-radius: 4px;}
+div.box::-webkit-scrollbar-track {background-color:rgba(208,204,204,1); border-radius: 4px;}
+div.box::-webkit-scrollbar-track-piece {background-color:rgba(177,224,216,1);border-radius: 4px;}
+div.box::-webkit-scrollbar-thumb {height:7px; background-color:rgba(28,50,51,1); border-radius:4px;}
+div.box::-webkit-scrollbar-corner {background-color:rgba(238,238,238,1);}
 
-h1 {
-  background: #ccc;
-  width: 100%;
-  max-width: 24em;
-  margin: 0 auto;
-  padding: 0.25em 0.625em;
-}
 .modalDialog {
 	position: fixed;
 	font-family: Arial, Helvetica, sans-serif;
@@ -129,7 +133,7 @@ h1 {
 
 .modalDialog:target {
 	opacity:1;
-	pointer-events: auto;	
+	pointer-events: auto;
 }
 
 .modalDialog > div {
@@ -189,4 +193,3 @@ img {
     width:49%;
     float: left;
 }
-
