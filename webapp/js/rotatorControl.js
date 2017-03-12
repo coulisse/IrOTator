@@ -53,10 +53,11 @@ function init(url) {
 
   function outputMessage (msg,error) {
   	var elem = document.getElementById("output");
+
   	if (error=true) {
   	  	elem.innerHTML += "<P class  = 'error' >"+msg+"</P>";
   	} else {
-  			elem.innerHTML += "<P>"+msg+"</P>";
+  			elem.innerHTML += "<P>" +msg+"</P>";
   	}
   }
 
@@ -80,6 +81,7 @@ function init(url) {
 
 
   function sendMessage(message) {
+  	
     outputMessage("SENT: " + message,false);
     websocket.send(message);
   }

@@ -1,17 +1,18 @@
-  .colorful {
+  html {
   	/* http://www.webcore-it.com/colorful-background/#   */
-    height: 100%;
-
+  height: 100%;
+	font-family: Arial;
+	
 	background:
-		-webkit-linear-gradient(45deg, hsla(359, 80%, 100%, 1) 0%, hsla(359, 80%, 100%, 0) 70%),
-		-webkit-linear-gradient(315deg, hsla(103, 83%, 80%, 1) 10%, hsla(103, 83%, 80%, 0) 80%),
-		-webkit-linear-gradient(225deg, hsla(105, 89%, 94%, 1) 10%, hsla(105, 89%, 94%, 0) 80%),
-		-webkit-linear-gradient(135deg, hsla(56, 64%, 69%, 1) 100%, hsla(56, 64%, 69%, 0) 70%);
+		-webkit-linear-gradient(45deg, hsla(247, 100%, 14%, 1) 0%, hsla(247, 100%, 14%, 0) 70%),
+		-webkit-linear-gradient(315deg, hsla(193, 95%, 39%, 1) 10%, hsla(193, 95%, 39%, 0) 80%),
+		-webkit-linear-gradient(225deg, hsla(228, 90%, 20%, 1) 10%, hsla(228, 90%, 20%, 0) 80%),
+		-webkit-linear-gradient(135deg, hsla(272, 95%, 4%, 1) 100%, hsla(272, 95%, 4%, 0) 70%);
 	background:
-		linear-gradient(45deg, hsla(359, 80%, 100%, 1) 0%, hsla(359, 80%, 100%, 0) 70%),
-		linear-gradient(135deg, hsla(103, 83%, 80%, 1) 10%, hsla(103, 83%, 80%, 0) 80%),
-		linear-gradient(225deg, hsla(105, 89%, 94%, 1) 10%, hsla(105, 89%, 94%, 0) 80%),
-		linear-gradient(315deg, hsla(56, 64%, 69%, 1) 100%, hsla(56, 64%, 69%, 0) 70%);
+		linear-gradient(45deg, hsla(247, 100%, 14%, 1) 0%, hsla(247, 100%, 14%, 0) 70%),
+		linear-gradient(135deg, hsla(193, 95%, 39%, 1) 10%, hsla(193, 95%, 39%, 0) 80%),
+		linear-gradient(225deg, hsla(228, 90%, 20%, 1) 10%, hsla(228, 90%, 20%, 0) 80%),
+		linear-gradient(315deg, hsla(272, 95%, 4%, 1) 100%, hsla(272, 95%, 4%, 0) 70%);
 	}
   	.control {
      float: left;
@@ -33,7 +34,7 @@
   }
 
   .button {
-    background-color: #4CAF50;
+    background-color: #0052cc;
     border: none;
     color: white;
     padding: 20px;
@@ -68,23 +69,48 @@ div.box {
     border-radius: 4px;
     width:100%; height:250px;
     overflow:auto;
-    background-color: white;
+    
+    
+    
+	background:
+		-webkit-linear-gradient(45deg, hsla(195, 54%, 27%, 1) 0%, hsla(195, 54%, 27%, 0) 70%),
+		-webkit-linear-gradient(315deg, hsla(193, 55%, 44%, 1) 10%, hsla(193, 55%, 44%, 0) 80%),
+		-webkit-linear-gradient(225deg, hsla(195, 54%, 41%, 1) 10%, hsla(195, 54%, 41%, 0) 80%),
+		-webkit-linear-gradient(135deg, hsla(193, 53%, 24%, 1) 100%, hsla(193, 53%, 24%, 0) 70%);
+	background:
+		linear-gradient(45deg, hsla(195, 54%, 27%, 1) 0%, hsla(195, 54%, 27%, 0) 70%),
+		linear-gradient(135deg, hsla(193, 55%, 44%, 1) 10%, hsla(193, 55%, 44%, 0) 80%),
+		linear-gradient(225deg, hsla(195, 54%, 41%, 1) 10%, hsla(195, 54%, 41%, 0) 80%),
+		linear-gradient(315deg, hsla(193, 53%, 24%, 1) 100%, hsla(193, 53%, 24%, 0) 70%);
+		
+		
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    float: bottom
+    
+    
     margin-bottom:0px; 
     margin-top:180px; 
+    
 }
  
 
 p {
-	font-family: Arial;
 	margin-left:20px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-family:  Courier, monospace;
 }
 
 p.error {
-	color: red;
+	color: orange;
 }
 
+h1 {
+  background: #ccc;
+  width: 100%;
+  max-width: 24em;
+  margin: 0 auto;
+  padding: 0.25em 0.625em;
+}
 .modalDialog {
 	position: fixed;
 	font-family: Arial, Helvetica, sans-serif;
@@ -163,3 +189,4 @@ img {
     width:49%;
     float: left;
 }
+
