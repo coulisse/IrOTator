@@ -1,37 +1,33 @@
-## Welcome to GitHub Pages
+# IrOTator
+This is a client/server application used to control an antenna rotator, simply using a web browser.
 
-You can use the [editor on GitHub](https://github.com/coulisse/esp8266Rotator/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## Why
+I'm an ham radio and I would to use a TV Antenna rotator, in order to point my antenna beam in a specific direction. 
+Since I wouldn't make any hole in my house walls, I decided to control the rotator using a WIFI system.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## What you need
+- esp8266 (nodemcu package)
+- hmc5883l (compass)
+- 2 Channel DC 5V Relay Module
+- TV antenna rotator
 
-### Markdown
+## Wiring 
+(TBD)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## The Software
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+## Howto use
 
-- Bulleted
-- List
+## TODO
+- Implement Internet Explorere 
+- Implement EDGE compatibility
 
-1. Numbered
-2. List
+## Thanks
+I'm using the JS component [Canvas Gauges](https://canvas-gauges.com/) for display the compass.
 
-**Bold** and _Italic_ and `Code` text
+## Licensing
+Please see the LICENSE file
 
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/coulisse/esp8266Rotator/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Links
+See my [blog](http://iu1bow.blogspot.it/)
