@@ -15,6 +15,11 @@
 		linear-gradient(315deg, hsla(272, 95%, 4%, 1) 100%, hsla(272, 95%, 4%, 0) 70%);
 	}
 
+ .page{
+    margin-left: auto;
+    margin-right: auto;
+ 		max-width: 1200px;
+}
 
   p {
   	margin-left:20px;
@@ -36,10 +41,11 @@
   }
   
   	.control {
-     float: left;
-     padding: 15px 50px;
+     float: right;
+     padding: 15px 10px;
     /* max-width: 600px; */
-     width: 500px;
+     max-width: 600px;
+     min-width: 300px;
      border: hidden gray;
      margin: auto;
      display: block;
@@ -50,7 +56,7 @@
      margin: 0px;
      padding: 0px;
      border: 1px hidden gray;
-     padding: 15px 50px;
+     padding: 0px;
 
   }
 
@@ -61,7 +67,7 @@
     padding: 20px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: block;
     font-size: 16px;
     cursor: pointer;
     border-radius: 4px;
@@ -82,9 +88,21 @@
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
+ 
     box-sizing: border-box;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    
+    box-shadow: 0px 0px 8px #d9d9d9; 
+    -moz-box-shadow: 0px 0px 8px #d9d9d9; 
+    -webkit-box-shadow: 0px 0px 8px #d9d9d9; 
   }
+  
+  #connectionString:focus {
+    outline: none; 
+    border: 1px solid #00ffff; 
+    box-shadow: 0px 0px 12px #00ffff; 
+    -moz-box-shadow: 0px 0px 12px #00ffff; 
+    -webkit-box-shadow: 0px 0px 12px #00ffff; 
+}
 
 div.box {
     border-radius: 4px;
@@ -94,6 +112,7 @@ div.box {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     margin-bottom:0px;
     margin-top:180px;
+    display: block;
 
 	background:
 		-webkit-linear-gradient(45deg, hsla(195, 54%, 27%, 1) 0%, hsla(195, 54%, 27%, 0) 70%),

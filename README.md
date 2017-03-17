@@ -1,4 +1,5 @@
-# IrOTator
+# IrOTator 
+(https://coulisse.github.io/IrOTator/)
 This is a client/server application used to control an antenna rotator, simply using a web browser.
 
 ## Why
@@ -20,7 +21,7 @@ Since I wouldn't make any hole in my house walls, I decided to control the rotat
 ## Howto use
 
 ## TODO
-- Implement Internet Explorere 
+- Implement Internet Explorer
 - Implement EDGE compatibility
 
 ## Thanks
