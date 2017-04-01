@@ -81,7 +81,7 @@ function init(url) {
 
 
   function sendMessage(message) {
-  	
+
     outputMessage("SENT: " + message,false);
     websocket.send(message);
   }

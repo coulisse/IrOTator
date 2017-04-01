@@ -63,7 +63,7 @@
                 data-use-min-path="true"
         >
         </canvas>
-       
+
          <script>
            var canvas = document.getElementById('bussola');
            canvas.addEventListener('click',function setHeading(evt) {
@@ -93,14 +93,13 @@
            });
         </script>
 
-        
         <div class=control>
         	<input id="connectionString" value="ws://192.168.1.73:81/" onkeypress="if(this.value) {if (window.event.keyCode == 13) {
           init(this.value);
           console.log(this.value);
           }}"/>
-				  <div class="left"> 
-          <input id="btnConnect" type="button" class="button" value="Connect" onclick="btnConnectFunc()">          
+				  <div class="left">
+          <input id="btnConnect" type="button" class="button" value="Connect" onclick="btnConnectFunc()">
         	</div>
         	<div class="right">
         		<input id="btnStop" type="button" class="button buttonDisabled" value="Stop" onclick="btnStopFunc()">
@@ -109,12 +108,12 @@
         		<input id="btnReset" type="button" class="button buttonDisabled" value="Reset" onclick="btnResetFunc()">
         	</div>
         	<div class="right">
-          <input id="btnMap" type="button" class="button" value="Map" onClick="redirect('#openModal')">    
+          <input id="btnMap" type="button" class="button" value="Map" onClick="redirect('#openModal')">
 					</div>
           <div class="box" id="output"></div>
         </div>
-        
-        
+
+
         <!-- map -->
         <div id="openModal" class="modalDialog">
           <div id="map">
@@ -122,6 +121,7 @@
 			      <img src="img/map.png">
 	        </div>
         </div>
+
        </div>
     </body>
 </html>
