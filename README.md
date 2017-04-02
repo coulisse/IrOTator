@@ -30,15 +30,15 @@ You can find it in the "webapp" directory.
 (TBD)
 
 ## Howto install and use
-1) open the esp8266Rotator.
-2) put your WiFi credentials in the file login.h
-3) install it on your nodemcu using Arduino IDE. See how to on [instructables] (http://www.instructables.com/id/Quick-Start-to-Nodemcu-ESP8266-on-Arduino-IDE/
-4) check the ip address of the nodemcu.
-5) copy the "weapp" directory in your preferred directory.
-6) open the rotator.html with your preferred browser.
-7) put the ip address of the nodemcu in the connection string, then connect to the rotoator and play with it!
+1. go in the  "esp8266Rotator" directory.
+2. put your WiFi credentials in the file login.h
+3. install "esp8266Rotator" on your nodemcu using Arduino IDE. See how to on  [instructables](http://www.instructables.com/id/Quick-Start-to-Nodemcu-ESP8266-on-Arduino-IDE/).
+4. check the ip address of the nodemcu.
+5. copy the "weapp" directory in your preferred directory.
+6. open the rotator.html with your preferred browser.
+7. put the ip address of the nodemcu in the connection string, then connect to the rotoator and play with it!
 
-If you want you could change the azimuthal map in the webapp/img/map.png using your position location. In order to do it see (http://ns6t.net/azimuth/azimuth.html)
+If you want you could change the azimuthal map in the webapp/img/map.png using your position location. In order to do it see on [ns6t](http://ns6t.net/azimuth/azimuth.html).
 
 
 ## TODO
