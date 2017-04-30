@@ -22,6 +22,9 @@
 
 ..............................................................................
   TODO:
+  - CV / CCV only if websocket connection established
+  - auto reboot
+  - maual commands
   - set output power
   - sleep mode
   - send data only if websocket connected
@@ -43,8 +46,9 @@ sensors_event_t event;
 sensor_t sensor;
 
 WebSocketsServer webSocket = WebSocketsServer(81);
-const byte CCVPIN = 13;  //7
-const byte CVPIN = 15;   //8
+const byte CCVPIN = 13;  //D7
+const byte CVPIN = 15;   //D8
+const byte LEDPIN = 12; //D6
 const float TOLERANCE = 2.5;
 float requestedDir = 999;
 float currentDir = 999;
@@ -55,6 +59,7 @@ float currentDir = 999;
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) {
 StaticJsonBuffer<200> jsonBuffer;
 
+  
     switch(type) {
 
       case WStype_DISCONNECTED:
@@ -100,6 +105,7 @@ void setup() {
 
    Serial.begin(9600);
 
+   pinMode(LEDPIN,OUTPUT);
    pinMode(CCVPIN,OUTPUT);
    pinMode(CVPIN,OUTPUT);
    stopRotator();
@@ -115,8 +121,9 @@ void setup() {
     webSocket.begin();
     webSocket.onEvent(webSocketEvent);
 
+   blink();  //wifi ok - blink n. 1
     Serial.println("HMC5883 Magnetometer"); Serial.println("");
-
+  
   /* Initialise the sensor */
   if(!mag.begin())  {
     /* There was a problem detecting the HMC5883 ... check your connections */
@@ -129,12 +136,14 @@ void setup() {
      displaySensorDetails();
   #endif
 
+  blink();  //end setup - blink n. 2
 }
 
 /******************************************************************************
  * Main loop                                                                  *
  ******************************************************************************/
 void loop() {
+
 
   webSocket.loop();
   doCommand(CMD_GET_COMPASS,0);
@@ -168,6 +177,7 @@ void loop() {
  *----------------------------------------------------------------------------*/
 void doCommand(const char* command, float value){
 
+  
 StaticJsonBuffer<200> jsonBuffer;
 
   char buffer[256];
@@ -209,7 +219,15 @@ StaticJsonBuffer<200> jsonBuffer;
  *-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
 float getCompass(){
 
+  static bool first_time = true;
+  
   mag.getEvent(&event);
+  if (first_time == true) {
+    blink();  //first data from compass received - blink n. 3
+    first_time = false;  
+  }
+  
+  
   // Hold the module so that Z is pointing 'up' and you can measure the heading with x&y
   // Calculate heading when the magnetometer is level, then correct for signs of axis.
   float heading = atan2(event.magnetic.y, event.magnetic.x);
@@ -264,8 +282,8 @@ int setRotator(int degree){
  *-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
 int stopRotator(){
   Serial.println("Stop Rotator");
-  digitalWrite(CCVPIN, HIGH);
-  digitalWrite(CVPIN, HIGH);
+  digitalWrite(CCVPIN, LOW); //changed to low, using transistors
+  digitalWrite(CVPIN, LOW);  //changed to low, using transistors 
   return 0;
 }
 /*-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*
@@ -320,3 +338,15 @@ void displaySensorDetails(void) {
   Serial.println("");
   delay(500);
 }
+
+/*-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*
+ * Turn on - off the control led                                              *
+ *-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
+void blink(void) {
+  digitalWrite(LEDPIN, LOW);  
+  digitalWrite(LEDPIN, HIGH);
+  delay(1000);  
+  digitalWrite(LEDPIN, LOW);
+  delay(1000);   
+}
+
