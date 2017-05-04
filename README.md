@@ -27,7 +27,7 @@ This application connects to the server, receive from it the direction of the an
 You can find it in the "webapp" directory.
 
 ## Wiring
-(TBD)
+![](esp8266Rotator/schema/schema.png?raw=true)
 
 ## Howto install and use
 1. go in the  "esp8266Rotator" directory.
