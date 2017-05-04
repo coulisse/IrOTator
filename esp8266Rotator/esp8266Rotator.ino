@@ -19,16 +19,22 @@
  version: 1.0
  date...: 01/04/2017
  comment: first release
+ ..............................................................................
+ version: 1.1
+ date...: 04/05/2017
+ comment: 
+ - send data only if websocket connected
+ - auto reboot after a specific time
+
 
 ..............................................................................
   TODO:
-  - CV / CCV only if websocket connection established
-  - auto reboot
   - maual commands
   - set output power
   - sleep mode
-  - send data only if websocket connected
-   send data only if different previous data or after a specific time
+  - send data only if different previous data or after a specific time
+  - retry connection
+  - check the stop command
 
 ******************************************************************************/
 
@@ -48,10 +54,14 @@ sensor_t sensor;
 WebSocketsServer webSocket = WebSocketsServer(81);
 const byte CCVPIN = 13;  //D7
 const byte CVPIN = 15;   //D8
-const byte LEDPIN = 12; //D6
-const float TOLERANCE = 2.5;
+const byte LEDPIN = 12;  //D6
+const float TOLERANCE = 4;
+const unsigned long MAX_TIME_REBOOT = 7200;  //in seconds
+//const unsigned long MAX_TIME_SLEEP  = 20;  //in seconds
+unsigned long time_last = 0;
 float requestedDir = 999;
 float currentDir = 999;
+bool ws_conn = false;
 
 /*----------------------------------------------------------------------------*
  * WEBSOCKET event                                                            *
@@ -59,18 +69,23 @@ float currentDir = 999;
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght) {
 StaticJsonBuffer<200> jsonBuffer;
 
-  
     switch(type) {
 
-      case WStype_DISCONNECTED:
-          break;
+      case WStype_DISCONNECTED: {
+            ws_conn = false;
+            break;
+          }
+          
 
       case WStype_CONNECTED: {
-            IPAddress ip = webSocket.remoteIP(num);
+            IPAddress ip = webSocket.remoteIP(num); 
+            ws_conn = true;
+            break;                  
           }
-          break;
+
 
       case WStype_TEXT: {
+        ws_conn = true;
         String text = String((char *) &payload[0]);
 
         JsonObject& root = jsonBuffer.parseObject(text);
@@ -87,7 +102,9 @@ StaticJsonBuffer<200> jsonBuffer;
         doCommand(command,value);
     }
    break;
-/*
+
+   
+/*  - auto reboot
     case WStype_BIN:
 
         hexdump(payload, lenght);
@@ -106,7 +123,7 @@ void setup() {
    Serial.begin(9600);
 
    pinMode(LEDPIN,OUTPUT);
-   pinMode(CCVPIN,OUTPUT);
+   pinMode(CCVPIN,OUTPUT);  Serial.println("CV");
    pinMode(CVPIN,OUTPUT);
    stopRotator();
 
@@ -144,31 +161,35 @@ void setup() {
  ******************************************************************************/
 void loop() {
 
-
+  checkForReset();
   webSocket.loop();
-  doCommand(CMD_GET_COMPASS,0);
-  //currentDir=getCompass();
-  if (requestedDir  > currentDir + TOLERANCE) {
-    Serial.print("RequestedDir: ");
-    Serial.print(requestedDir);
-    Serial.print(" CurrentDir: ");
-    Serial.print(currentDir);
-    Serial.print(" CurrentDir+TOL: ");
-    Serial.println(currentDir+TOLERANCE);
-    cv();
-  } else if (requestedDir < currentDir - TOLERANCE) {
-    Serial.print("RequestedDir: ");
-    Serial.print(requestedDir);
-    Serial.print(" CurrentDir: ");
-    Serial.print(currentDir);
-    Serial.print(" CurrentDir-TOL: ");
-    Serial.println(currentDir-TOLERANCE);
 
-    ccv();
+  if (ws_conn == true) {
+    time_last = millis()/1000;
+    doCommand(CMD_GET_COMPASS,0);
+    //currentDir=getCompass();
+    if (requestedDir  > currentDir + TOLERANCE) {
+      Serial.print("RequestedDir: ");
+      Serial.print(requestedDir);
+      Serial.print(" CurrentDir: ");
+      Serial.print(currentDir);
+      Serial.print(" CurrentDir+TOL: ");
+      Serial.println(currentDir+TOLERANCE);
+      cv();
+    } else if (requestedDir < currentDir - TOLERANCE) {
+      Serial.print("RequestedDir: ");
+      Serial.print(requestedDir);
+      Serial.print(" CurrentDir: ");
+      Serial.print(currentDir);
+      Serial.print(" CurrentDir-TOL: ");
+      Serial.println(currentDir-TOLERANCE);
+      ccv();
+    } else {
+      stopRotator();
+    }
   } else {
     stopRotator();
   }
-
   delay(500);  //TODO: eliminare
 }
 /*----------------------------------------------------------------------------*
@@ -281,16 +302,19 @@ int setRotator(int degree){
  * Stop rotator                                                               *
  *-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
 int stopRotator(){
-  Serial.println("Stop Rotator");
-  digitalWrite(CCVPIN, LOW); //changed to low, using transistors
-  digitalWrite(CVPIN, LOW);  //changed to low, using transistors 
+  int state_ccv = digitalRead(CCVPIN);
+  int state_cv = digitalRead(CVPIN);
+  if (state_ccv == HIGH || state_cv == HIGH) {
+    Serial.println("Stop Rotator");
+    digitalWrite(CCVPIN, LOW); //changed to low, using transistors
+    digitalWrite(CVPIN, LOW);  //changed to low, using transistors 
+  }
   return 0;
 }
 /*-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*
  * Counter Clock-wise rotation                                                *
  *-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
 int ccv(){
-  Serial.println("CCV");
   digitalWrite(CCVPIN, HIGH);
   digitalWrite(CVPIN, LOW);
   return 0;
@@ -300,25 +324,9 @@ int ccv(){
  * Clock-wise rotation                                                        *
  *-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
 int cv(){
-  Serial.println("CV");
   digitalWrite(CCVPIN, LOW);
   digitalWrite(CVPIN, HIGH);
   return 0;
-}
-
-/*-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*
- * Reset and reboot the system                                                *
- *-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
-int reset(){
-  Serial.println(F("Stop rotator..."));
-  doCommand(CMD_STOP_ROTATOR,0);
-  Serial.println(F("Disconnecting websocket..."));
-  webSocket.disconnect();
-  Serial.println(F("Ending wifi..."));
-  WiFi.disconnect();
-  Serial.println(F("Rebooting..."));
-  Serial.end();
-  ESP.reset();
 }
 
 /*-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*
@@ -345,8 +353,47 @@ void displaySensorDetails(void) {
 void blink(void) {
   digitalWrite(LEDPIN, LOW);  
   digitalWrite(LEDPIN, HIGH);
-  delay(1000);  
+  delay(600);  
   digitalWrite(LEDPIN, LOW);
-  delay(1000);   
+  delay(600);   
 }
+
+/*----------------------------------------------------------------------------*
+ * Check if the module is inactive for more than a time after the last        *
+ * reboot                                                                     *
+ * If yes it does another reboot                                              *
+ *----------------------------------------------------------------------------*/
+void checkForReset(){
+  unsigned long seconds = (millis()/1000) - time_last;
+  /*Serial.print("seconds: ");
+  Serial.print(seconds);
+  Serial.print(" --- ");
+  Serial.print("time last: ");
+  Serial.println(time_last); */
+  
+  if (seconds > MAX_TIME_REBOOT) {
+    Serial.println(F("reboot..."));
+    reset();
+/*    int SLEEP_DELAY_IN_SECONDS  = 20;
+    ESP.deepSleep(SLEEP_DELAY_IN_SECONDS * 1000000, WAKE_RF_DEFAULT);
+    delay(100); // wait for deep sleep to happen*/
+  }
+}
+
+
+/*-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*
+ * Reset and reboot the system                                                *
+ *-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*/
+int reset(){
+  Serial.println(F("Stop rotator..."));
+  doCommand(CMD_STOP_ROTATOR,0);
+  Serial.println(F("Disconnecting websocket..."));
+  webSocket.disconnect();
+  Serial.println(F("Ending wifi..."));
+  WiFi.disconnect();
+  Serial.println(F("Rebooting..."));
+  Serial.end();
+  ESP.reset();
+}
+
 

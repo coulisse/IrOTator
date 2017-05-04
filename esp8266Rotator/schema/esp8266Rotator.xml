@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>/mnt/data_disk/nodemcu_eps/webRotator/esp8266Rotator/schema/esp8266Rotator.sch</source>
+    <date>gio 04 mag 2017 09:54:19 CEST</date>
+    <tool>Eeschema 4.0.6</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>esp8266Rotator.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="R1">
+      <value>1K</value>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5909CE0C</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>1K</value>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5909CE59</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>1K</value>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5909CE92</tstamp>
+    </comp>
+    <comp ref="Q2">
+      <value>PN2222A</value>
+      <footprint>TO_SOT_Packages_THT:TO-92_Molded_Narrow</footprint>
+      <libsource lib="transistors" part="PN2222A"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5909D96C</tstamp>
+    </comp>
+    <comp ref="Q1">
+      <value>PN2222A</value>
+      <footprint>TO_SOT_Packages_THT:TO-92_Molded_Narrow</footprint>
+      <libsource lib="transistors" part="PN2222A"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5909D9D9</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>LED</value>
+      <libsource lib="device" part="LED"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5909DA08</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>NodeMCU1.0(ESP-12E)</value>
+      <libsource lib="ESP8266" part="NodeMCU1.0(ESP-12E)"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5909DF1D</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>47K</value>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5909E9F8</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>47K</value>
+      <libsource lib="device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5909EC79</tstamp>
+    </comp>
+    <comp ref="U2">
+      <value>HMC5843_BREAKOUT_BOARD</value>
+      <libsource lib="fv_kicad_lib" part="HMC5843_BREAKOUT_BOARD"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>590AD982</tstamp>
+    </comp>
+    <comp ref="RL1">
+      <value>FINDER-30.22</value>
+      <libsource lib="relays" part="FINDER-30.22"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>590AE66A</tstamp>
+    </comp>
+    <comp ref="RL2">
+      <value>FINDER-30.22</value>
+      <libsource lib="relays" part="FINDER-30.22"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>590AE980</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="relays" part="FINDER-40.52">
+      <aliases>
+        <alias>FINDER-41.52</alias>
+        <alias>FINDER-44.52</alias>
+        <alias>FINDER-44.62</alias>
+        <alias>FINDER-30.22</alias>
+        <alias>RSM822</alias>
+        <alias>RM84</alias>
+      </aliases>
+      <description>FINDER 40.52, Dual Pole Relay, 5mm Pitch, 10A</description>
+      <docs>http://gfinder.findernet.com/assets/Series/353/S40EN.pdf</docs>
+      <fields>
+        <field name="Reference">RL</field>
+        <field name="Value">FINDER-40.52</field>
+      </fields>
+      <pins>
+        <pin num="11" name="~" type="passive"/>
+        <pin num="12" name="~" type="passive"/>
+        <pin num="14" name="~" type="passive"/>
+        <pin num="21" name="~" type="passive"/>
+        <pin num="22" name="~" type="passive"/>
+        <pin num="24" name="~" type="passive"/>
+        <pin num="A1" name="~" type="passive"/>
+        <pin num="A2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="fv_kicad_lib" part="HMC5843_BREAKOUT_BOARD">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">HMC5843_BREAKOUT_BOARD</field>
+      </fields>
+      <pins>
+        <pin num="~" name="GND" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="LED">
+      <description>LED generic</description>
+      <footprints>
+        <fp>LED*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="ESP8266" part="NodeMCU1.0(ESP-12E)">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">NodeMCU1.0(ESP-12E)</field>
+      </fields>
+      <pins>
+        <pin num="1" name="A0(ADC0)" type="input"/>
+        <pin num="2" name="RSV" type="input"/>
+        <pin num="3" name="RSV" type="input"/>
+        <pin num="4" name="SD3(GPIO10)" type="input"/>
+        <pin num="5" name="SD2(GPIO9)" type="input"/>
+        <pin num="6" name="SD1(MOSI)" type="input"/>
+        <pin num="7" name="CMD(CS)" type="input"/>
+        <pin num="8" name="SDO(MISO)" type="input"/>
+        <pin num="9" name="CLK(SCLK)" type="input"/>
+        <pin num="10" name="GND" type="input"/>
+        <pin num="11" name="3.3V" type="input"/>
+        <pin num="12" name="EN" type="input"/>
+        <pin num="13" name="RST" type="input"/>
+        <pin num="14" name="GND" type="input"/>
+        <pin num="15" name="VIN" type="input"/>
+        <pin num="16" name="3.3V" type="input"/>
+        <pin num="17" name="GND" type="input"/>
+        <pin num="18" name="TX(GPIO1)" type="input"/>
+        <pin num="19" name="RX(DPIO3)" type="input"/>
+        <pin num="20" name="D8(GPIO15)" type="input"/>
+        <pin num="21" name="D7(GPIO13)" type="input"/>
+        <pin num="22" name="D6(GPIO12)" type="input"/>
+        <pin num="23" name="D5(GPIO14)" type="input"/>
+        <pin num="24" name="GND" type="input"/>
+        <pin num="25" name="3.3V" type="input"/>
+        <pin num="26" name="D4(GPIO2)" type="input"/>
+        <pin num="27" name="D3(GPIO0)" type="input"/>
+        <pin num="28" name="D2(GPIO4)" type="input"/>
+        <pin num="29" name="D1(GPIO5)" type="input"/>
+        <pin num="30" name="D0(GPIO16)" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="transistors" part="PN2222A">
+      <description>40V Vce, 1A Ic, NPN, General Purpose Transistor, TO-92</description>
+      <docs>http://www.fairchildsemi.com/ds/PN/PN2222A.pdf</docs>
+      <footprints>
+        <fp>TO-92*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">PN2222A</field>
+        <field name="Footprint">TO_SOT_Packages_THT:TO-92_Molded_Narrow</field>
+      </fields>
+      <pins>
+        <pin num="1" name="E" type="passive"/>
+        <pin num="2" name="B" type="input"/>
+        <pin num="3" name="C" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="device" part="R">
+      <description>Resistor</description>
+      <footprints>
+        <fp>R_*</fp>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="device">
+      <uri>/usr/share/kicad/library/device.lib</uri>
+    </library>
+    <library logical="transistors">
+      <uri>/usr/share/kicad/library/transistors.lib</uri>
+    </library>
+    <library logical="ESP8266">
+      <uri>/mnt/data_disk/nodemcu_eps/webRotator/esp8266Rotator/schema/kicad-ESP8266-master/ESP8266.lib</uri>
+    </library>
+    <library logical="relays">
+      <uri>/usr/share/kicad/library/relays.lib</uri>
+    </library>
+    <library logical="fv_kicad_lib">
+      <uri>/mnt/data_disk/nodemcu_eps/webRotator/esp8266Rotator/schema/fv_kicad_lib/fv_kicad_lib.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(U1-Pad29)">
+      <node ref="U1" pin="29"/>
+    </net>
+    <net code="2" name="Net-(Q1-Pad2)">
+      <node ref="Q1" pin="2"/>
+      <node ref="R3" pin="2"/>
+    </net>
+    <net code="3" name="Net-(R3-Pad1)">
+      <node ref="U1" pin="20"/>
+      <node ref="R3" pin="1"/>
+    </net>
+    <net code="4" name="Net-(D1-Pad2)">
+      <node ref="R1" pin="1"/>
+      <node ref="D1" pin="2"/>
+    </net>
+    <net code="5" name="Net-(U1-Pad28)">
+      <node ref="U1" pin="28"/>
+      <node ref="U2" pin="~"/>
+    </net>
+    <net code="6" name="Net-(RL1-Pad11)">
+      <node ref="RL1" pin="21"/>
+      <node ref="RL1" pin="11"/>
+    </net>
+    <net code="7" name="Net-(RL1-Pad12)">
+      <node ref="RL1" pin="12"/>
+    </net>
+    <net code="8" name="Net-(RL1-Pad22)">
+      <node ref="RL1" pin="22"/>
+    </net>
+    <net code="9" name="Net-(Q2-Pad3)">
+      <node ref="R4" pin="2"/>
+      <node ref="RL1" pin="A2"/>
+      <node ref="Q2" pin="3"/>
+    </net>
+    <net code="10" name="GND">
+      <node ref="U1" pin="17"/>
+      <node ref="RL2" pin="A1"/>
+      <node ref="D1" pin="1"/>
+      <node ref="Q1" pin="1"/>
+      <node ref="Q2" pin="1"/>
+      <node ref="RL1" pin="A1"/>
+      <node ref="U2" pin="~"/>
+    </net>
+    <net code="11" name="+5V">
+      <node ref="U2" pin="~"/>
+      <node ref="R5" pin="1"/>
+      <node ref="R4" pin="1"/>
+      <node ref="U1" pin="15"/>
+    </net>
+    <net code="12" name="Net-(RL1-Pad14)">
+      <node ref="RL1" pin="14"/>
+    </net>
+    <net code="13" name="Net-(Q1-Pad3)">
+      <node ref="RL2" pin="A2"/>
+      <node ref="Q1" pin="3"/>
+      <node ref="R5" pin="2"/>
+    </net>
+    <net code="15" name="Net-(RL1-Pad24)">
+      <node ref="RL2" pin="24"/>
+      <node ref="RL1" pin="24"/>
+    </net>
+    <net code="16" name="Net-(RL2-Pad11)">
+      <node ref="RL2" pin="11"/>
+      <node ref="RL2" pin="21"/>
+    </net>
+    <net code="17" name="Net-(RL2-Pad12)">
+      <node ref="RL2" pin="12"/>
+    </net>
+    <net code="18" name="Net-(RL2-Pad22)">
+      <node ref="RL2" pin="22"/>
+    </net>
+    <net code="19" name="Net-(RL2-Pad14)">
+      <node ref="RL2" pin="14"/>
+    </net>
+    <net code="20" name="Net-(U1-Pad3)">
+      <node ref="U1" pin="3"/>
+    </net>
+    <net code="21" name="Net-(U1-Pad4)">
+      <node ref="U1" pin="4"/>
+    </net>
+    <net code="22" name="Net-(U1-Pad5)">
+      <node ref="U1" pin="5"/>
+    </net>
+    <net code="23" name="Net-(U1-Pad6)">
+      <node ref="U1" pin="6"/>
+    </net>
+    <net code="24" name="Net-(U1-Pad7)">
+      <node ref="U1" pin="7"/>
+    </net>
+    <net code="25" name="Net-(U1-Pad8)">
+      <node ref="U1" pin="8"/>
+    </net>
+    <net code="26" name="Net-(U1-Pad9)">
+      <node ref="U1" pin="9"/>
+    </net>
+    <net code="27" name="Net-(U1-Pad10)">
+      <node ref="U1" pin="10"/>
+    </net>
+    <net code="28" name="Net-(U1-Pad2)">
+      <node ref="U1" pin="2"/>
+    </net>
+    <net code="29" name="Net-(U1-Pad30)">
+      <node ref="U1" pin="30"/>
+    </net>
+    <net code="30" name="Net-(U1-Pad11)">
+      <node ref="U1" pin="11"/>
+    </net>
+    <net code="31" name="Net-(R2-Pad1)">
+      <node ref="R2" pin="1"/>
+      <node ref="U1" pin="21"/>
+    </net>
+    <net code="32" name="Net-(U1-Pad12)">
+      <node ref="U1" pin="12"/>
+    </net>
+    <net code="33" name="Net-(R1-Pad2)">
+      <node ref="U1" pin="22"/>
+      <node ref="R1" pin="2"/>
+    </net>
+    <net code="34" name="Net-(U1-Pad13)">
+      <node ref="U1" pin="13"/>
+    </net>
+    <net code="35" name="Net-(U1-Pad23)">
+      <node ref="U1" pin="23"/>
+    </net>
+    <net code="36" name="Net-(U1-Pad14)">
+      <node ref="U1" pin="14"/>
+    </net>
+    <net code="37" name="Net-(Q2-Pad2)">
+      <node ref="R2" pin="2"/>
+      <node ref="Q2" pin="2"/>
+    </net>
+    <net code="38" name="Net-(U1-Pad24)">
+      <node ref="U1" pin="24"/>
+    </net>
+    <net code="39" name="Net-(U1-Pad1)">
+      <node ref="U1" pin="1"/>
+    </net>
+    <net code="40" name="Net-(U1-Pad19)">
+      <node ref="U1" pin="19"/>
+    </net>
+    <net code="41" name="Net-(U1-Pad25)">
+      <node ref="U1" pin="25"/>
+    </net>
+    <net code="42" name="Net-(U1-Pad16)">
+      <node ref="U1" pin="16"/>
+    </net>
+    <net code="43" name="Net-(U1-Pad26)">
+      <node ref="U1" pin="26"/>
+    </net>
+    <net code="44" name="Net-(U1-Pad27)">
+      <node ref="U1" pin="27"/>
+    </net>
+    <net code="45" name="Net-(U1-Pad18)">
+      <node ref="U1" pin="18"/>
+    </net>
+  </nets>
+</export>
