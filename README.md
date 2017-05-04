@@ -10,6 +10,7 @@ Since I wouldn't make any hole in my house walls, I decided to control the rotat
 - esp8266 (nodemcu package)
 - hmc5883l (compass)
 - 2 Channel DC 5V Relay Module
+- 2 P82b715 (i2c extender) module
 - TV antenna rotator
 
 ## The Software
