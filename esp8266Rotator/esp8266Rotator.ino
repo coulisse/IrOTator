@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
  /******************************************************************************
 
                                  esp8266Rotator
@@ -62,6 +64,7 @@ unsigned long time_last = 0;
 float requestedDir = 999;
 float currentDir = 999;
 bool ws_conn = false;
+1short rotation = 0;
 
 /*----------------------------------------------------------------------------*
  * WEBSOCKET event                                                            *
@@ -96,8 +99,9 @@ StaticJsonBuffer<200> jsonBuffer;
             return;
         }
         const char* command   = root["c"];
-        float value     = root["v"];
+        float value           = root["v"];
         const char* rc        = root["r"];
+        //float  rc        = root["r"];
 
         doCommand(command,value);
     }
@@ -123,7 +127,7 @@ void setup() {
    Serial.begin(9600);
 
    pinMode(LEDPIN,OUTPUT);
-   pinMode(CCVPIN,OUTPUT);  Serial.println("CV");
+   pinMode(CCVPIN,OUTPUT); 
    pinMode(CVPIN,OUTPUT);
    stopRotator();
 
@@ -163,26 +167,26 @@ void loop() {
 
   checkForReset();
   webSocket.loop();
-
+  
   if (ws_conn == true) {
     time_last = millis()/1000;
     doCommand(CMD_GET_COMPASS,0);
     //currentDir=getCompass();
     if (requestedDir  > currentDir + TOLERANCE) {
-      Serial.print("RequestedDir: ");
+/*      Serial.print("RequestedDir: ");
       Serial.print(requestedDir);
       Serial.print(" CurrentDir: ");
       Serial.print(currentDir);
       Serial.print(" CurrentDir+TOL: ");
-      Serial.println(currentDir+TOLERANCE);
+      Serial.println(currentDir+TOLERANCE); */
       cv();
     } else if (requestedDir < currentDir - TOLERANCE) {
-      Serial.print("RequestedDir: ");
+   /*   Serial.print("RequestedDir: ");
       Serial.print(requestedDir);
       Serial.print(" CurrentDir: ");
       Serial.print(currentDir);
       Serial.print(" CurrentDir-TOL: ");
-      Serial.println(currentDir-TOLERANCE);
+      Serial.println(currentDir-TOLERANCE); */
       ccv();
     } else {
       stopRotator();
@@ -210,22 +214,22 @@ StaticJsonBuffer<200> jsonBuffer;
 
   if (strcmp(command,CMD_GET_COMPASS)==0) {
     root["v"] = getCompass();
-    root["r"] = 0;
+    root["r"] = rotation;
     currentDir = root["v"];
   } else {
     if (strcmp(command,CMD_SET_ROTATOR)==0){
       //root["v"] = setRotator(root["v"]);
       root["v"] = value;
-      root["r"] = 0;
+      root["r"] = rotation;
       requestedDir = (float) value;;
     } else {
       if (strcmp(command,CMD_STOP_ROTATOR)==0){
         root["v"] = stopRotator();
-        root["r"] = 0;
+        root["r"] = rotation;
           } else {
             if (strcmp(command,CMD_RESET)==0){
               root["v"] = reset();
-              root["r"] = 0;
+              root["r"] = rotation;
             }
   }}}
 
@@ -275,7 +279,9 @@ if (headingDegrees < 90) {
   };
 
 if ((headingDegrees >=90) || (headingDegrees <270)) {
-   headingDegrees=180+(headingDegrees-90)/2;
+   headingDegrees=180+(headingDegrees-90)/2;  cv
+}
+
    };
 //else already correct within degree or 2
 */
@@ -309,6 +315,7 @@ int stopRotator(){
     digitalWrite(CCVPIN, LOW); //changed to low, using transistors
     digitalWrite(CVPIN, LOW);  //changed to low, using transistors 
   }
+  rotation=0;
   return 0;
 }
 /*-+-+-+-+-+-+-++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-*
@@ -317,6 +324,7 @@ int stopRotator(){
 int ccv(){
   digitalWrite(CCVPIN, HIGH);
   digitalWrite(CVPIN, LOW);
+  rotation=-1;
   return 0;
 }
 
@@ -326,6 +334,7 @@ int ccv(){
 int cv(){
   digitalWrite(CCVPIN, LOW);
   digitalWrite(CVPIN, HIGH);
+  rotation=1;
   return 0;
 }
 

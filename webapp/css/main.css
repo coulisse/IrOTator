@@ -2,7 +2,7 @@
   	/* http://www.webcore-it.com/colorful-background/#   */
   height: 100%;
 	font-family: Arial;
-
+/*
 	background:
 		-webkit-linear-gradient(45deg, hsla(247, 100%, 14%, 1) 0%, hsla(247, 100%, 14%, 0) 70%),
 		-webkit-linear-gradient(315deg, hsla(193, 95%, 39%, 1) 10%, hsla(193, 95%, 39%, 0) 80%),
@@ -12,7 +12,17 @@
 		linear-gradient(45deg, hsla(247, 100%, 14%, 1) 0%, hsla(247, 100%, 14%, 0) 70%),
 		linear-gradient(135deg, hsla(193, 95%, 39%, 1) 10%, hsla(193, 95%, 39%, 0) 80%),
 		linear-gradient(225deg, hsla(228, 90%, 20%, 1) 10%, hsla(228, 90%, 20%, 0) 80%),
-		linear-gradient(315deg, hsla(272, 95%, 4%, 1) 100%, hsla(272, 95%, 4%, 0) 70%);
+		linear-gradient(315deg, hsla(272, 95%, 4%, 1) 100%, hsla(272, 95%, 4%, 0) 70%); */
+    background:
+  		-webkit-linear-gradient(45deg, hsla(102, 0%, 21%, 1) 0%, hsla(102, 0%, 21%, 0) 70%),
+  		-webkit-linear-gradient(315deg, hsla(99, 11%, 14%, 1) 10%, hsla(99, 11%, 14%, 0) 80%),
+  		-webkit-linear-gradient(225deg, hsla(202, 96%, 75%, 1) 10%, hsla(202, 96%, 75%, 0) 80%),
+  		-webkit-linear-gradient(135deg, hsla(202, 96%, 30%, 1) 100%, hsla(202, 96%, 30%, 0) 70%);
+  	background:
+  		linear-gradient(45deg, hsla(102, 0%, 21%, 1) 0%, hsla(102, 0%, 21%, 0) 70%),
+  		linear-gradient(135deg, hsla(99, 11%, 14%, 1) 10%, hsla(99, 11%, 14%, 0) 80%),
+  		linear-gradient(225deg, hsla(202, 96%, 75%, 1) 10%, hsla(202, 96%, 75%, 0) 80%),
+  		linear-gradient(315deg, hsla(202, 96%, 30%, 1) 100%, hsla(202, 96%, 30%, 0) 70%);
 	}
 
  .page{
@@ -25,12 +35,12 @@
   	margin-left:20px;
   	margin-top: 0px;
   	margin-bottom: 0px;
-  	font-family:  Courier, monospace;
+    color:lightgrey;
+    font-family:  Repetition, monospace;
   }
 
   p.error {
   	color: orange;
-    font-weight: bold;
   }
 
   h1 {

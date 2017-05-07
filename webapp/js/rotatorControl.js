@@ -5,7 +5,10 @@ const LBL_CONNECTING = "Connetting";
 const LBL_RESET = "Reset";
 const LBL_RESETTING = "Resetting";
 const LBL_STOP = "Stop";
+const LBL_CV = "CV";
+const LBL_CCV = "CCV";
 const LBL_STOPPING = "Stopping";
+
 
 var headingDegrees, sv_heading=0;
 
@@ -25,11 +28,13 @@ function init(url) {
   websocket.onmessage = function(evt) {
       var obj = JSON.parse(evt.data);
 
+
       switch(obj.c) {
 
           case "getCompass":
               document.gauges.forEach(function(gauge) {
                     gauge.value = parseFloat(obj.v) || 0;
+                    gauge.update({ valueText: parseDir(obj.r)});
               });
           break;
 
@@ -53,8 +58,9 @@ function init(url) {
 
   function outputMessage (msg,error) {
   	var elem = document.getElementById("output");
+    msg=(new Date).toTimeString().slice(0,8)+" "+msg;
 
-  	if (error=true) {
+  	if (error==true) {
   	  	elem.innerHTML += "<P class  = 'error' >"+msg+"</P>";
   	} else {
   			elem.innerHTML += "<P>" +msg+"</P>";
@@ -106,6 +112,7 @@ function init(url) {
       }  else {
         btnConnect.value = LBL_DISCONNECTING;
         websocket.close();
+        outputMessage("DISCONNECTED",false);
         document.gauges.forEach(function(gauge) {
               gauge.value = 0;
         });
@@ -177,4 +184,13 @@ function btnStopFunc() {
 function redirect(url){
    var url = "#openModal";
     window.open(url, '_top');
+}
+
+function parseDir(dir){
+  if (dir == 0) {
+    return LBL_STOP;
+  } else if (dir == -1) {
+    return LBL_CCV;
+  }
+  return LBL_CV;
 }
